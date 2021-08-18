@@ -17,7 +17,7 @@ If you are running Windows, and for some reason want to make your .gitignore fil
 ```PowerShell
 Write-Gig Python -v
 ```
-#Info
+# Info
 Contact: rennerom@gmail
 
 # TODO
