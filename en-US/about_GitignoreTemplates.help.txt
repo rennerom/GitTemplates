@@ -1,0 +1,20 @@
+TOPIC
+    GitignoreTemplate
+
+SHORT DESCRIPTION
+    GitignoreTemplate makes finding and generating 
+    pre-existing .gitingore files easy.
+
+LONG DESCRIPTION
+    Create a .gitignore file from any template found on the 
+    github/gitignore repo, or just create a blank one you can add to later. 
+    
+    Simply provide a parameter for the template name (e.g 'Write-Gig Python')
+    If a Python.gitignore template is in that repo (it is) then 
+    Write-Gig will create a new .gitignore file using that template. 
+    
+    If the template parameter is left blank then a blank .gitignore file 
+    will be created instead. 
+
+KEYWORDS
+    gitignore, template
