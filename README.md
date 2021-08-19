@@ -1,5 +1,5 @@
-# Purose
-A simple PowerShell module to generate .gitignore files from templates on the github/gitignore repo
+# Purpose
+A simple PowerShell module to generate common files for git repos
 
 # Requirements
 This works on Windows. I haven't tested it on anything else since I primarily use PowerShell only on windows machines. But I think it's set up to work well on Mac/Linux. If you run into issues let me know.
@@ -21,5 +21,7 @@ Write-Gig Python -v
 Contact: rennerom@gmail
 
 # TODO
+- [ ] Add a Write-Readme function
+- [ ] Add a Write-License function
 - [ ] Verify other OS compatibility
 - [ ] Error handling for `-v` flag on non windows machines

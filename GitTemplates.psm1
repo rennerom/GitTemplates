@@ -14,6 +14,8 @@ Function Write-Gig {
         Parameter Visible is optional and is intended for Windows use only. 
         You can use the -Visible (-v) switch to make your .gitignore visible
         instead of hidden, if that's what you're into.
+        .OUTPUTS
+        a .gitignore file in the current directory
         .EXAMPLE
         Write-Gig Python
         Create .gitignore file for Python
@@ -21,8 +23,11 @@ Function Write-Gig {
         Write-Gig Python -v
         Create a visible (non hidden file attribute) .gitignore file
         for Python (This will only work on Windows)
+        .LINK
+        https://www.github.com/rennerom/GitignoreTemplates
     #>
-    #----------------------params
+
+    # ----------------------params
     param(
         # .gitignore template name
         [Alias('t')]
@@ -45,7 +50,6 @@ Function Write-Gig {
         $filePrefix = ""
     }
 
-    write-output "$filePrefix.gitignore"
     # Feedback
     Write-Host "Downloading .gitignore template from $($url)"
     
