@@ -56,11 +56,11 @@ Function Edit-Gig{
         
     } else {
 
-        # Set Comment String and list string
-        $CommentString = "# $Comment"
-        $PatternString = $Pattern.Split(",").Trim()
-
-        $FullOutputText = "$CommentString`n$PatternString"
+        # Create text string
+        $TextString = "# $Comment"
+        $PatternString = $Pattern
+        $OutputText = "$TextString,$PatternString"
+        $FullOutputText = $OutputText.Split(",").Trim()
 
         write-host("Appending to .gitignore`n--------------------`n$FullOutputText")
         Add-Content -Path .gitignore -Value "`n$FullOutputText"
