@@ -9,11 +9,12 @@ LONG DESCRIPTION
     This module is intended to automate some of the common tasks 
     when creating a new git repo. Right now this only includes
     creating new .gitignore files from existing templates on the
-    github/gitignore repository. 
-    
+    github/gitignore repository.
+
     Likely additions to this module include 
     - autogen README.md
     - autogen LICENSE files
+    - Maybe others?
 
 LICENSE
     GNU General Public License v3.0
