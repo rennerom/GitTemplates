@@ -1,4 +1,4 @@
-Function Edit-Gig{
+Function Edit-Gig {
     <# 
         .SYNOPSIS
         Edit an existing .gitignore file by appending text to it.
@@ -43,18 +43,19 @@ Function Edit-Gig{
         [string]$Pattern,
 
         # Comment line
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [Alias('c')]
         [string]$Comment = "Appended on $(Get-Date -Format M/d/yy)"
-        )
+    )
 
     # Check if .gitignore is there
 
-    if(-not(Test-Path -Path .gitignore -PathType Leaf)) {  
+    if (-not(Test-Path -Path .gitignore -PathType Leaf)) {  
 
         Write-Host "`nNo .gitignore file found in this directory`n"
         
-    } else {
+    }
+    else {
 
         # Create text string
         $TextString = "# $Comment"

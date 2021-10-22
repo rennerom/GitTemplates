@@ -1,97 +1,183 @@
-Function Write-Readme{
+Function Write-Readme {
     <#
         .SYNOPSIS
         Create a README.md file quickly
         .DESCRIPTION
         Answer the prompts to generate a README.md file
+        .PARAMETER xtoc
+        xtoc (-xt) is a switch parameter used when you want to exclude 
+        a Table of Contents from your README.md file. By not providing 
+        the switch parameter, a Table of Contents will be indlucded.
+        .PARAMETER Test
+        Test (-t) is a switch parameter used when you want to do a test run.
+        When included, all README and LICENSE file outputs will have a 
+        '_test' suffix. 
         .OUTPUTS
-        a README.md file in the current directory
+        a README.md file in the current directory 
+        and if you choose to
+        a LICENSE.txt file in the current directory
         .EXAMPLE
         Write-Readme
-        Then answer the prompts as they come up
+        Then answer the prompts as they come up to scaffold your README.md
+        .EXAMPLE
+        Write-Readme -t
+        Scaffold a README_test.md (and optionally a LICENSE_test.txt)
+        .Example
+        Write-Readme -xt -t
+        Scaffoled a README_test.md (and optionally a LICENSE_test.txt)
+        without a Table of Contents in the README_test.txt file
         .LINK
         https://www.github.com/rennerom/GitTemplates
     #>
-    
-    $mdTemp = @()
-    $mdToc = @()
+
+    param(
+        [Alias('xt')]
+        [switch]$xtoc,
+        [Alias('t')]
+        [switch]$Test
+    )
+
+    if ($Test) {
+        $ReadmeFileName = "README_test.md"
+    }
+    else {
+        $ReadmeFileName = "README.md"
+    }
+
+    $Script:mdToc = [System.Collections.ArrayList]@(
+        "`n## Contents"
+    )
+
+    $Script:mdBody = [System.Collections.ArrayList]@()
 
     Clear-Host
 
     # Project Name and Overview
-    $ProjName = Read-Host -Prompt "Enter Project Title (or skip for default)"
+    $ProjName = Read-Host -Prompt "Enter project title or name (or skip for default)"
     
     Clear-Host
 
     if (checkEntry($ProjName)) {
-        $ProjOverview = Read-Host -Prompt "Enter a quick overview of the project"
-        addToTemplate("# $ProjName")
-        addToTemplate("`n$ProjOverview`n")
-    } else {
-        addToTemplate("# Project Name")
-        addToTemplate("`nEnter a brief description here`n")
+        $ProjName = $ProjName
+        $ProjOverview = Read-Host -Prompt "Enter a brief subtitle or synopsis for the project (or skip for default)"
     }
-    
-    Clear-Host
+    else {
+        $ProjName = "Project Name"
+        $ProjOverview = "Enter a subtitle or synopsis here"
+    }
 
-    $requirements = Read-Host -Prompt "Brief description of any external requirements to start this project (skip if none)"
-    if (checkEntry($requirements)) {
-        addToTemplate("`n# Requirements")
-        addToTemplate("`n$requirements`n")
-    }
+    $mdHeader = [System.Collections.ArrayList]@(
+        "# $ProjName"
+        "$ProjOverview"
+    )
 
     Clear-Host
 
-    $start = Read-Host -Prompt "Brief description of 'How To Start' this project (skip if none)"
+    $overview = Read-Host -Prompt "Enter a brief overview or for this project (or skip to exclude)"
+    if (checkEntry($overview)) {
+        addToBody("`n# Overview")
+        addToBody("$overview")
+        addToToc("Overview")
+    }
+ 
+    Clear-Host
+
+    $start = Read-Host -Prompt "Brief description of 'How To Start' this project (or skip to exclude)"
     if (checkEntry($start)) {
-        addToTemplate("`n# How to Start")
-        addToTemplate("`n$start`n")
+        addToBody("`n# Getting Started")
+        addToBody("$start")
+        addToToc("Getting Started")
+
     }
 
     Clear-Host
 
     $use = Read-Host -Prompt "Brief description of this projects basic usage (or skip for default)"
     if (checkEntry($use)) {
-        addToTemplate("`n# Usage")
-        addToTemplate("`n$use`n")
-    } else {
-        addToTemplate("`n# Usage")
-        addToTemplate("`nBrief description of usage goes here.`n")
+        addToBody("`n# Usage")
+        addToBody("$use")
+    }
+    else {
+        addToBody("`n# Usage")
+        addToBody("Brief description of usage goes here")
+    }
+    addToToc("Usage")
+ 
+    Clear-Host
+
+    $notes = Read-Host -Prompt "Provide a brief summary of any notes for this project (or skip to exclude)"
+    if (checkEntry($start)) {
+        addToBody("`n# Notes")
+        addToBody("$notes")
+        addToToc("Notes")
+
+    }
+    
+    Clear-Host
+
+    $todo = Read-Host "Do you want to include a TODO segment (y/n)?"
+
+    while ("y", "n", "yes", "no" -notcontains $todo.ToLower()) {
+        Clear-Host
+        $contact = Read-Host "Do you want to have a TODO segment (y/n)?"
+    }
+
+    if ("y", "yes" -contains $todo.ToLower()) {
+        addToBody("`n# TODO")
+        addToBody(@(
+                "   - [ ] first"
+                "`n   - [ ] second"
+                "`n   - [ ] third"
+            ))
+        addToToc("TODO")
     }
 
     Clear-Host
 
-    $contact = Read-Host "Provide Contact (y/n)"
+    $contact = Read-Host "Do you want to have a Contact segment (y/n)?"
 
-    while("y","n","yes","no" -notcontains $contact.ToLower())
-    {
+    while ("y", "n", "yes", "no" -notcontains $contact.ToLower()) {
         Clear-Host
-	    $contact = Read-Host "Provide Contact (y/n)"
+        $contact = Read-Host "Do you want to have a Contact segment (y/n)?"
     }
 
-    if("y","yes" -contains $contact.ToLower()){
+    if ("y", "yes" -contains $contact.ToLower()) {
         $userName = Read-Host -Prompt "Name (first and last)?"
-        $email = Read-Host  Prompt "What is your email?"
-            addToTemplate("`n# Contact")
-            addToTemplate("`nemail $userName at $email`n")
+        $email = Read-Host -Prompt "What is your email?"
+        addToBody("`n# Contact")
+        addToBody("Email $userName at $email")
+        addToToc("Contact")
     }
-    
+
+    Clear-Host
+
     $license = Read-Host "Do you want to include a license for this project (y/n)?"
 
-    while("y","n","yes","no" -notcontains $license.ToLower())
-    {
+    while ("y", "n", "yes", "no" -notcontains $license.ToLower()) {
         Clear-Host
-	    $contact = Read-Host "Do you want to include a license for this project (y/n)?"
+        $contact = Read-Host "Do you want to include a license for this project (y/n)?"
     }
 
-    if("y","yes" -contains $contact.ToLower()){
-        $userName = Read-Host -Prompt "Name (first and last)?"
-        $email = Read-Host  Prompt "What is your email?"
-            addToTemplate("`n# Contact")
-            addToTemplate("`nemail $userName at $email`n")
+    if ("y", "yes" -contains $license.ToLower()) {
+        $kind = Get-MenuSelection -MenuPrompt "Select License" -t $Test
+        write-host @(
+            "LICENSE.txt file created for $kind"
+            "`nBe sure to edit the file if needed to reflect the copyright year and owner"
+        )
+        addToBody("`n# License")
+        addToBody("[$kind](LICENSE.txt)")
+        addToToc("License")
     }
 
-    Write-Output $Script:mdTemp
-    $Script:mdTemp | Out-File -FilePath ./README2.md
+    if ($xtoc) {
+        $Script:mdToc = $null
+    }
 
+    $newOutput = @(
+        $mdHeader
+        $Script:mdToc
+        $Script:mdBody
+    )
+    write-output $newOutput | out-file -FilePath $ReadmeFileName
+    write-output "`n$ReadmeFileName template compete!"
 }
