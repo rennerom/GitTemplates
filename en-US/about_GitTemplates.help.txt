@@ -7,14 +7,11 @@ SHORT DESCRIPTION
 
 LONG DESCRIPTION
     This module is intended to automate some of the common tasks 
-    when creating a new git repo. Right now this only includes
+    when creating a new git repo. This includes
     creating new .gitignore files from existing templates on the
-    github/gitignore repository.
-
-    Likely additions to this module include 
-    - autogen README.md
-    - autogen LICENSE files
-    - Maybe others?
+    github/gitignore repository, generating README.md files that are
+    scaffolded from a prompt based cli and the option to inlcude a
+    LICENSE.txt file in the process (the more common ones)
 
 LICENSE
     GNU General Public License v3.0
@@ -23,4 +20,4 @@ SEE ALSO
     https://www.github.com/rennerom/GitignoreTemplates
 
 KEYWORDS
-    gitignore, template
+    gitignore, template, readme, license

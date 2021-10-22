@@ -9,25 +9,25 @@
 @{
 
     # Script module or binary module file associated with this manifest.
-    RootModule = 'GitTemplates.psm1'
+    RootModule        = 'GitTemplates.psm1'
     
     # Version number of this module.
-    ModuleVersion = '1.0'
+    ModuleVersion     = '1.0'
     
     # Supported PSEditions
     # CompatiblePSEditions = @()
     
     # ID used to uniquely identify this module
-    GUID = '10542640-bca8-4393-8b8c-ff0c1fe7a161'
+    GUID              = '10542640-bca8-4393-8b8c-ff0c1fe7a161'
     
     # Author of this module
-    Author = 'Max Renner'
+    Author            = 'Max Renner'
     
     # Company or vendor of this module
     # CompanyName = 'Unknown'
     
     # Copyright statement for this module
-    Copyright = '(c) 2021 Max Renner. All rights reserved.'
+    Copyright         = '(c) 2021 Max Renner. All rights reserved.'
     
     # Description of the functionality provided by this module
     # Description = ''
@@ -73,7 +73,7 @@
         'Edit-Gig',
         'Write-Gig',
         'Write-Readme'
-        )
+    )
     
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     # CmdletsToExport = @()
@@ -94,7 +94,7 @@
     # FileList = @()
     
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
-    PrivateData = @{
+    PrivateData       = @{
     
         PSData = @{
     
@@ -123,6 +123,6 @@
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
     
-    }
+}
     
     

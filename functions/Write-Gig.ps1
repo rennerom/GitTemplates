@@ -64,7 +64,7 @@ Function Write-Gig {
         # set file attributes for .gitignore to visible (windows only)
         [Alias('v')]
         [switch]$Visible
-        )
+    )
 
     # Set .gitignore template url
     $url = "https://raw.githubusercontent.com/github/gitignore/master/$($Template).gitignore"
@@ -73,8 +73,9 @@ Function Write-Gig {
     $os = [System.Environment]::OSVersion.Platform
 
     if ($os = "Win32NT") {
-        $filePrefix =".\"
-    } else {
+        $filePrefix = ".\"
+    }
+    else {
         $filePrefix = ""
     }
 
@@ -84,15 +85,15 @@ Function Write-Gig {
     try {
         # Grab web content and output it to a .gitignore file
         $file = Invoke-WebRequest -Uri $url | Select-Object -Expand Content | `
-        Set-Content $filePrefix".gitignore" -Force -ErrorAction stop
+            Set-Content $filePrefix".gitignore" -Force -ErrorAction stop
 
     }
     catch {
         # Error handling
         Write-Host @("There was an error while downloading the $($Template)"
-                ".gitignore template from a GitHub repository."
-                "`nPlease check the template name. (It's case sensitive)") `
-                -ForegroundColor Yellow
+            ".gitignore template from a GitHub repository."
+            "`nPlease check the template name. (It's case sensitive)") `
+            -ForegroundColor Yellow
         break
     }
 
@@ -100,10 +101,11 @@ Function Write-Gig {
     if (-Not $Visible) {
         (Get-Item .\.gitignore -FORCE).Attributes = `
         (Get-Item .\.gitignore -FORCE).Attributes -bxor [io.fileattributes]::Hidden
-    } else {
+    }
+    else {
         write-host "Making .gitignore visible"
     }
 
     # Wrap up
     Write-Host "Done"
-    }
+}

@@ -2,3 +2,7 @@
 
 # Ignore readme.json for now
 readme.json
+
+# exclude all test files
+README_test.md
+LICENSE_test.txt
