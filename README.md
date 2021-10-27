@@ -6,12 +6,12 @@ Install Module from Github, or download this repo and import module
 
 # How to Use
 ## .gitignores
-- ### [`Write-Gig`](docs/Write-Gig.md)
+- [`Write-Gig`](docs/Write-Gig.md)
   - Write (or overwrite) .gitignore files using existing .gitignore templates from the github/gitignore repo. 
-- ### [`Edit-Gig`](docs/Edit-Gig.md)
+- [`Edit-Gig`](docs/Edit-Gig.md)
   - Add to an existing .gitignore file by appending text to it.
 ## READMEs
-- ### [`Write-Readme`](docs/Write-Readme.md)
+- [`Write-Readme`](docs/Write-Readme.md)
   - Scaffold a README file based on your input to a few cli prompts. You'll also have an option to create a LICENSE file in the process. 
 
 # Notes
