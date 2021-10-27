@@ -1,8 +1,8 @@
-# Purpose
+# GitTemplates
 A simple PowerShell module to generate common files for git repos
 
 # Getting Started
-Install Module from Github, or download this repo and import module
+Install Module from Github, or clone/download this repo and import module
 
 # How to Use
 ## .gitignores
@@ -15,13 +15,13 @@ Install Module from Github, or download this repo and import module
   - Scaffold a README file based on your input to a few cli prompts. You'll also have an option to create a LICENSE file in the process. 
 
 # Notes
-I split a lot of my work between Windows, Mac, and Linux machines. Most of what I have in this repo has been testing on all three, but not everything. 
+I split a lot of my work between Windows, Mac, and Linux machines. Most of what I have in this repo has been tested on all three, but not everything. 
 
 The gitignore functions were mainly built and tested on windows.
 
 The readme function was mainly built and tested on Mac and Linux. 
 
-Drop a PR or open an issue if you see something that's not working.
+Drop a PR or open an issue if you find a problem.
 
 # Info
 Contact: rennerom@gmail
@@ -30,6 +30,11 @@ Contact: rennerom@gmail
 - [x] Add an Edit-Gig function
 - [x] Add a Write-Readme function
 - [x] Add a Write-License function (now part of Write-Readme)
-- [ ] Verify other OS compatibility
-- [ ] Error handling for `-v` flag on non windows machines
 - [ ] Add other README template layouts
+- [ ] Pester tests/github actions
+
+# Contact
+Max Renner: rennerom@gmail.com
+
+# License
+[GNU General Public License v3.0](LICENSE.txt)
