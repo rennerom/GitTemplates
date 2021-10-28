@@ -18,3 +18,10 @@ function addToToc([string]$appendedString) {
 function cleanAnchor ([string]$anchor) {
     $anchor.ToLower() -replace ' ', '-'
 }
+
+function uniqueHash {
+    $string = Get-Date -Format "yyyymmddhhmmssff"
+    $iostream = [IO.MemoryStream]::new([byte[]][char[]]$string)
+    $myHash = (Get-FileHash -InputStream $iostream -Algorithm SHA1).Hash
+    return $myHash.Substring(0, 7)
+}

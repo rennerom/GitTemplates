@@ -61,9 +61,9 @@ Function Edit-Gig {
         $TextString = "# $Comment"
         $PatternString = $Pattern
         $OutputText = "$TextString,$PatternString"
-        $FullOutputText = $OutputText.Split(",").Trim()
+        $FullOutputText = $OutputText.Split(",").Trim() | Out-String
 
         write-host("Appending to .gitignore`n--------------------`n$FullOutputText")
-        Add-Content -Path .gitignore -Value "`n$FullOutputText"
+        Add-Content -Path .gitignore -Value "`n$FullOutputText" -noNewLine
     }
 }

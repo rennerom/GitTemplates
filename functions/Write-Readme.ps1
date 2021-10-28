@@ -44,6 +44,10 @@ Function Write-Readme {
         $ReadmeFileName = "README.md"
     }
 
+    if(test-Path $ReadmeFileName){
+        $hashValue = $(uniqueHash)
+    }
+
     $Script:mdToc = [System.Collections.ArrayList]@(
         "`n## Contents"
     )
@@ -159,11 +163,7 @@ Function Write-Readme {
     }
 
     if ("y", "yes" -contains $license.ToLower()) {
-        $kind = Get-MenuSelection -MenuPrompt "Select License" -t $Test
-        write-host @(
-            "LICENSE.txt file created for $kind"
-            "`nBe sure to edit the file if needed to reflect the copyright year and owner"
-        )
+        $kind = Get-MenuSelection -MenuPrompt "Select License" -t $Test -hashValue $hashValue
         addToBody("`n# License")
         addToBody("[$kind](LICENSE.txt)")
         addToToc("License")
@@ -178,6 +178,34 @@ Function Write-Readme {
         $Script:mdToc
         $Script:mdBody
     )
-    write-output $newOutput | out-file -FilePath $ReadmeFileName
-    write-output "`n$ReadmeFileName template compete!"
+
+    if (test-path $ReadmeFileName){
+        $fileExistsResponse = Get-SaveMenuSelection -MenuPrompt "$ReadmeFileName already exists" -filePath $ReadmeFileName
+        switch ($fileExistsResponse) 
+        {
+            0 {
+                $newOutput | out-file -FilePath $ReadmeFileName
+                $finalMessage = "$ReadmeFileName template compete!"
+                break
+            }
+            1 {
+                $baseName = (Split-Path -Path $ReadmeFileName -Leaf).Split(".")[0]
+                $extention = (Split-Path -Path $ReadmeFileName -Leaf).Split(".")[1]
+                $ReadmeFileName = "$($baseName)_$hashValue.$extention"
+                $newOutput | out-file -FilePath $ReadmeFileName
+                $finalMessage = "$ReadmeFileName template compete!"
+                break
+            }
+            2 {
+                $finalMessage = "Template discarded"
+                break
+            }
+            default {
+                $finalMessage = "Some error occured while selecting an option.`nExiting and discarding unsaved template"
+            }
+        }
+    } else {
+        $newOutput | out-file -FilePath $ReadmeFileName
+    }
+    write-output "$finalMessage"
 }
