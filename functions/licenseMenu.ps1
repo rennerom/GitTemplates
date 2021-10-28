@@ -14,6 +14,7 @@ function Get-MenuSelection {
     $pos = 0 # current item selection
 
     #create licenseObject
+    # These could be passed in maybe?
     $licenseObject = (Invoke-RestMethod -Uri https://api.github.com/licenses)
     $licenseObject = @(($licenseObject.spdx_id), ($licenseObject.name), ($licenseObject.url)) 
     $menuItems = $licenseObject[0]
