@@ -4,5 +4,11 @@
 readme.json
 
 # exclude all test files
-README_test.md
-LICENSE_test.txt
+# README_test.md
+# LICENSE_test.txt
+
+# ingore _test/_xxxxx (testing files) files
+/*_*.*
+
+# Ignore sandbox folder
+/SandBox

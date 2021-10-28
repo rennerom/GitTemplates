@@ -6,7 +6,8 @@ function Get-MenuSelection {
         [Parameter(Mandatory = $true)]
         [String]$MenuPrompt,
         [Alias('t')]
-        [bool]$Test = $false
+        [bool]$Test = $false,
+        [string]$hashValue
     )
     # store initial cursor position
     $cursorPosition = $host.UI.RawUI.CursorPosition
@@ -78,8 +79,47 @@ function Get-MenuSelection {
     else {
         $FileName = "LICENSE.txt"
     }
+
+    #test if file exits
+    if (Test-Path $FileName) {
+        $fileExistsResponse = Get-SaveMenuSelection -MenuPrompt "$FileName already exists" -filePath $FileName
+        
+
+        switch ($fileExistsResponse) {
+            0 {
+                (invoke-restmethod -Uri $licenseObject[2][$pos]).body | Out-File -FilePath $FileName
+                $finalMessage = @(
+                    "$FileName composed for $($licenseObject[1][$pos])!"
+                    "`nBe sure to edit the file if needed to reflect the copyright year and owner"
+                )
+                break
+            }
+            1 {
+                $baseName = (Split-Path -Path $FileName -Leaf).Split(".")[0]
+                $extention = (Split-Path -Path $FileName -Leaf).Split(".")[1]
+                $FileName = "$($baseName)_$hashValue.$extention"
+                (invoke-restmethod -Uri $licenseObject[2][$pos]).body | Out-File -FilePath $FileName
+                $finalMessage = @(
+                    "$FileName composed for $($licenseObject[1][$pos])!"
+                    "`nBe sure to edit the file if needed to reflect the copyright year and owner"
+                )
+                break
+            }
+            2 {
+                $finalMessage = "License document not updated"
+                break
+            }
+            default {
+                $finalMessage = "Some error occured while selecting an option.`nExiting and discarding unsaved License document"
+            }
+        }
+    }
+    else {
+        (invoke-restmethod -Uri $licenseObject[2][$pos]).body | Out-File -FilePath $FileName
+    }
+    
     # create LICENSE.txt file
-    (invoke-restmethod -Uri $licenseObject[2][$pos]).body | Out-File -FilePath $FileName
+    write-host "$finalMessage"
 
     return $licenseObject[1][$pos]
 }

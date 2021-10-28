@@ -36,6 +36,20 @@ Write-Readme -Test
 Add the `-Test` or `-t` tag to do generate a README_test (and optional LICENSE_test) file. 
 
 # Notes
+## File Protection
+:warning:__Overwriting existing README and LICENSE files__:warning:
+
+Didn't realize you were in the wrong directory until it was too late? No sweat. If you create a README or LICENSE file in a directory where one already exists, you will be prompted to confirm that you intend to save over your old copy. You also have the option to save a unique copy if you don't want to redo all the work you just did. 
+
+A unique copy is just the README.md or LICENSE.txt file name with a unique 7 digit number inserted with an underscore between the file name and the file extension. 
+```
+README_BB7E001.md
+LICENSE_BB7E001.txt
+```
+The unique identifiers will always match both LICENSE and README files are saved as unique copies in the same Write-Readme call.
+
+You also have the option of stopping all progress and exiting at this point too by choosing `Exit and save nothing`
+
 ## License upkeep
 If you decide to add a license, you may want to edit the file after it's created. Some licenses have placeholders for the copywrite year and the copywrite holders name. The MIT license for exmaple starts with...
 
