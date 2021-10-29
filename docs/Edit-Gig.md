@@ -1,5 +1,5 @@
 # Edit-Gig
-Add to an existing .gitignore file by appending text to it.
+Add to an existing .gitignore file by appending text to it
 
 # Parameters
 ### `-Pattern (-p)` : string
